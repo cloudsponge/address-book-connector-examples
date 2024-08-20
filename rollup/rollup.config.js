@@ -1,7 +1,6 @@
-import resolve from 'rollup-plugin-node-resolve';
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import html from 'rollup-plugin-template-html';
+import resolve from '@rollup/plugin-node-resolve';
+import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import copy from 'rollup-plugin-copy';
 
 const babelOptions = require('./babel.config');
@@ -20,7 +19,7 @@ export default [
     plugins: [
       babel({
         exclude: 'node_modules/**',
-        runtimeHelpers: true,
+        babelHelpers: 'bundled',
         ...babelOptions,
       }),
       resolve({
@@ -29,12 +28,9 @@ export default [
       commonjs({
         include: 'node_modules/**',
       }),
-      html({
-        template: 'src/index.html',
-        filename: 'index.html'
-      }),
       copy({
         targets: [
+          {src: 'src/index.html', dest: 'dist'},
           {src: 'src/favicon.ico', dest: 'dist'},
         ]
       }),
